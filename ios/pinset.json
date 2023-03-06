@@ -1,0 +1,9 @@
+{
+  "domains": {
+    "*.example.com": {
+      "pins": [
+        "sha256/xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+      ]
+    }
+  }
+}

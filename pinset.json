@@ -1,0 +1,10 @@
+{
+  "domains": {
+    "jsonplaceholder.typicode.com": {
+      "pins": [
+        "sha256/F5yEJFlAhYki30l8i+NwYAdXTKE1+x/n9J41HHorqys=",
+        "sha256/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="
+      ]
+    }
+  }
+}
