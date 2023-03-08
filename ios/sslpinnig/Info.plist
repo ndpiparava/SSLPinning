@@ -49,6 +49,8 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+  <key>CodePushDeploymentKey</key>
+  <string>EUWv1Y5oDlWGsh_WA1wV_VQyKc-1PDYxiSP_0</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 </dict>

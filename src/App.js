@@ -1,14 +1,29 @@
 //convert above compnent to functional comoonent
 
 import React, {useEffect, useState} from 'react';
-import {View, Text, Button, StyleSheet, NativeModules} from 'react-native';
+import {View, Text, Button, StyleSheet, NativeModules,SafeAreaView} from 'react-native';
 
 import ShapeView from './ShapeView';
 import Plist from 'react-native-plist';
+import {useSSLKeyStore} from './stores/useSSLKeyStore';
+
+import CodePush from 'react-native-code-push';
+
+const CODE_PUSH_OPTIONS = {
+  checkFrequency: CodePush.CheckFrequency.ON_APP_RESUME,
+  installMode: CodePush.InstallMode.ON_NEXT_RESUME,
+  deploymentKey: 'JB_iy1a2yCGJDFrUDR4ke3Zo4VAzZUyHqcORE',
+};
 
 const App = () => {
   const [shape, setShape] = useState('logo');
   const [status, setStatus] = useState('');
+  const key = useSSLKeyStore(state => state.sslKey);
+  const setSSLKey = useSSLKeyStore (state => state.setSSLKey);
+
+  useEffect(() => {
+    CodePush.sync({ installMode: CodePush.InstallMode.ON_NEXT_SUSPEND });
+  }, []);
 
   const updatePlistSSLKey = () => {
     Plist.updatePlistWithDictionary('Info.plist', 'TSKConfiguration', {
@@ -22,11 +37,34 @@ const App = () => {
     });
   };
 
+  
+
   useEffect(() => {
+
+    console.log('key ==', key);
     NativeModules.TrustKitInitialiser.InitialiseTrustKit([
       'F5yEJFlAhYki30l8i+NwYAdXTKE1+x/n9J41HHorqys=',
       'ZYyEJFlAhYki30l8i+NwYAdXTKE1+x/n9J41HHorqys=',
     ]);
+  }
+    // if (key === 'F5yEJFlAhYki30l8i+NwYAdXTKE1+x/n9J41HHorqys=') {
+
+    //   console.log("called to set wrong key")
+    //    // set new ssl key in store
+    //    setSSLKey('ZYyEJFlAhYki30l8i+NwYAdXTKE1+x/n9J41HHorqys=' )
+       
+
+    // else {
+
+    //   console.log("called to set right key")
+    //   setSSLKey('F5yEJFlAhYki30l8i+NwYAdXTKE1+x/n9J41HHorqys=' )
+    //   NativeModules.TrustKitInitialiser.InitialiseTrustKit([
+    //     'S5yEJFlAhYki30l8i+NwYAdXTKE1+x/n9J41HHorqys=',
+    //     'ZYyEJFlAhYki30l8i+NwYAdXTKE1+x/n9J41HHorqys=',
+    //   ]);
+    // }
+
+    
     // updatePlistSSLKey();
   }, []);
 
@@ -75,13 +113,19 @@ const App = () => {
         });
       });
       */
+
+     
   };
 
   // render the app screen
   return (
+    
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={{fontSize: 24}}>Shapes</Text>
+        <Text style={{fontSize: 12, marginLeft: 30, marginTop: 50, height: 60}}>{key}</Text>
+       
+
       </View>
       <ShapeView style={styles.content} shape={shape} status={status} />
       <View style={styles.footer}>
@@ -90,10 +134,11 @@ const App = () => {
         </View>
       </View>
     </View>
+    
   );
 };
 
-export default App;
+export default CodePush(CODE_PUSH_OPTIONS)(App);
 
 // flexbox styles
 const styles = StyleSheet.create({
@@ -101,18 +146,20 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     backgroundColor: '#fff',
-    margin: 10,
+    margin: 40,
   },
   header: {
     flex: 0.1,
     flexDirection: 'row',
     justifyContent: 'center',
+    height: 300,
   },
   content: {
     flex: 0.8,
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+    height:200,
   },
   footer: {
     flex: 0.1,

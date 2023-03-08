@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "android": "react-native run-android",
-    "ios": "react-native run-ios",
+    "ios": "react-native run-ios --simulator='iPhone 14'",
+    "ios:device": "react-native run-ios ",
     "lint": "eslint .",
     "start": "react-native start",
     "test": "jest"
@@ -12,9 +13,13 @@
   "dependencies": {
     "react": "18.2.0",
     "react-native": "0.71.3",
+    "@react-native-async-storage/async-storage": "^1.15.11",
     "react-native-cert-pinner": "^0.4.1",
     "react-native-plist": "^1.0.2",
-    "react-native-ssl-pinning": "^1.5.7"
+    "react-native-ssl-pinning": "^1.5.7",
+    "zustand": "^4.3.6",
+    "react-native-code-push": "^7.0.5",
+    "appcenter": "4.4.5"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
